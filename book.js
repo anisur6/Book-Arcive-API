@@ -2,22 +2,43 @@ const bookInput = document.getElementById('book-input');
 const displayInput = document.getElementById('search-result');
 const errorDiv = document.getElementById('error');
 
+//function for spinner
+const spinner = displaystyle => {
+  document.getElementById('spinner').style.display = displaystyle;
+}
+
 const getbooks = () => {
   const searchText = bookInput.value;
   // console.log(searchText);
+
+  //run spinner
+  spinner('block');
+   
   bookInput.value = '';
   if (searchText === '') {
     errorDiv.innerText = 'no input given'
+    spinner('none')
   }
 
   else {
-    
-  //get details api
-  const url = `http://openlibrary.org/search.json?q=${searchText}`;
-  fetch(url)
-    .then(res => res.json())
-      .then(data => displayField(data.docs))
-      errorDiv.innerText = '';
+
+    //get details api
+    const url = `https://openlibrary.org/search.json?q=${searchText}`;
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        if (data.numFound === 0) {
+          document.getElementById('error').innerText = ' No Data Found...'
+          spinner('none')
+        }
+
+        else {
+          displayField(data.docs)
+        }
+
+      })
+
+    errorDiv.innerText = '';
   }
 
 
@@ -53,7 +74,10 @@ const displayField = books => {
                   </div>
         `
     displayInput.appendChild(div);
-  })
+
+  });
+  //stop the spinner
+  spinner('none')
 }
 
 
