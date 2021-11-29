@@ -13,7 +13,7 @@ const getbooks = () => {
 
   //run spinner
   spinner('block');
-   
+
   bookInput.value = '';
   if (searchText === '') {
     errorDiv.innerText = 'no input given'
@@ -64,7 +64,7 @@ const displayField = books => {
     div.classList.add('col');
     div.innerHTML = `
         <div class="card h-100 shadow">
-                    <img height="300px" src="${cover}" class="card-img-top" alt="...">
+                    <img height="300px" src="${cover}" class="card-img-top" alt="card-image">
                     <div class="card-body">
                       <h5 class="card-title fw-bold">${book.title}</h5>
                       <h6 class="text-bold"><span class="fw-bold">Author :</span> ${book.author_name?.[0] || 'no author found'}</h6>
